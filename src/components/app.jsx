@@ -5,16 +5,11 @@ import Header from "./header";
 import Note from "./note";
 
 const App = () => {
-    const [items, setItems] = useState([]);
     return (
         <div>
             <Header />
-            <CreateArea
-                onAdd={(data) => {
-                    setItems([...items, data]);
-                }}
-            />
-            <Note items={items} />
+            <CreateArea />
+            <Note />
             <Footer />
         </div>
     );

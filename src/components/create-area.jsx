@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { MdAddCircle } from "react-icons/md";
-
+import { useSelector, useDispatch } from "react-redux";
+import {setShow, addTodo} from '../features/todo/todoSlice'
 const CreateArea = ({ onAdd }) => {
-    const [isShow, setIsShow] = useState(false);
+    const {todos, isShow} = useSelector((state) => ({...state.todo}));
+    const dispatch = useDispatch();
     const [note, setNote] = useState({
         id: "",
         title: "",
@@ -22,14 +24,13 @@ const CreateArea = ({ onAdd }) => {
         if (note.title === "" || note.content === "") {
             alert("Please fill in all fields");
         } else {
-            onAdd(note);
+            dispatch(addTodo(note));
             setNote({
                 id: "",
                 title: "",
                 content: "",
             });
         }
-        // console.log(note);
     };
 
     return (
@@ -40,7 +41,7 @@ const CreateArea = ({ onAdd }) => {
                     "relative my-2 mx-auto w-[480px] bg-white p-4 rounded-md shadow-lg"
                 }
             >
-                <div onClick={() => setIsShow(true)}>
+                <div onClick={() => dispatch(setShow())}>
                     <input
                         name={"title"}
                         type={"text"}
