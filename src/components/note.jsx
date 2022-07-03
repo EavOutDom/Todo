@@ -21,6 +21,10 @@ const Note = () => {
                         >
                             {data.title}
                         </h1>
+                        {/* <input 
+                            value={data.title}
+                            onChange={(e) => dispatch(updateTodo(e.target.value, data.id))}
+                        /> */}
                         <p
                             className={
                                 "bg-white rounded-md px-2 py-4 w-[240px] m-4 float-left shadow-xl"
