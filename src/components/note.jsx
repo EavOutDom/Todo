@@ -32,10 +32,10 @@ const Note = () => {
                         >
                             {data.content}
                         </p>
-                        <div className="flex justify-end">
+                        <div className={"w-full flex justify-end items-end"}>
                             <button
                                 className={
-                                    "bg-[yellow] text-white rounded-full p-2 text-xl"
+                                    "bg-[yellow] text-white rounded-full p-2 text-xl "
                                 }
                                 onClick={() => dispatch(deleteTodo(data.id))}
                             >
