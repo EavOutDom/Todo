@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTodo, updateTodo } from "../features/todo/todoSlice";
+import Modal from "./modal";
 const Note = () => {
     const { todos } = useSelector((state) => ({ ...state.todo }));
+    const [modal, setModal] = useState(false);
+    const [temp, setTemp] = useState({});
     const dispatch = useDispatch();
-
     return (
         <div>
-            {todos?.map((data, index) => {
+            {todos?.map((data) => {
                 return (
                     <div
                         key={data.id}
@@ -32,15 +34,32 @@ const Note = () => {
                         >
                             {data.content}
                         </p>
+
                         <div className={"w-full flex justify-end items-end"}>
                             <button
                                 className={
                                     "bg-[yellow] text-white rounded-full p-2 text-xl "
                                 }
-                                onClick={() => dispatch(deleteTodo(data.id))}
+                                onClick={() => {
+                                    setModal(true);
+                                    // dispatch(deleteTodo(data.id));
+                                    setTemp(data);
+                                    
+                                }}
                             >
                                 <BsFillTrashFill />
                             </button>
+                            {modal && (
+                                <Modal
+                                    text={`Are you sure you want to delete this ${temp.title}?`}
+                                    onConfirm={() => {
+                                        
+                                        dispatch(deleteTodo(temp.id));
+                                        setModal(false);
+                                    }}
+                                    onCancel={() => setModal(false)}
+                                />
+                            )}
                             {/* <button
                                 onClick={() => dispatch(updateTodo(data.id))}
                             >
@@ -50,7 +69,6 @@ const Note = () => {
                     </div>
                 );
             })}
-            <div></div>
         </div>
     );
 };
