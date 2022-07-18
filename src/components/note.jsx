@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTodo, updateTodo } from "../features/todo/todoSlice";
+import { deleteTodo } from "../features/todo/todoSlice";
 import Modal from "./modal";
-const Note = () => {
+import { FiEdit } from "react-icons/fi";
+
+const Note = ({ checkNote, focus }) => {
     const { todos } = useSelector((state) => ({ ...state.todo }));
     const [modal, setModal] = useState(false);
     const [temp, setTemp] = useState({});
@@ -23,10 +25,6 @@ const Note = () => {
                         >
                             {data.title}
                         </h1>
-                        {/* <input 
-                            value={data.title}
-                            onChange={(e) => dispatch(updateTodo(e.target.value, data.id))}
-                        /> */}
                         <p
                             className={
                                 "bg-white rounded-md px-2 py-4 w-[240px] m-4 float-left shadow-xl"
@@ -37,14 +35,23 @@ const Note = () => {
 
                         <div className={"w-full flex justify-end items-end"}>
                             <button
+                                onClick={() => {
+                                    checkNote(data.id);
+                                    focus();
+                                }}
                                 className={
-                                    "bg-[yellow] text-white rounded-full p-2 text-xl "
+                                    "bg-[yellow] mr-2 text-white rounded-full p-2 text-xl "
+                                }
+                            >
+                                <FiEdit />
+                            </button>
+                            <button
+                                className={
+                                    "bg-[yellow] ml-2 text-white rounded-full p-2 text-xl "
                                 }
                                 onClick={() => {
                                     setModal(true);
-                                    // dispatch(deleteTodo(data.id));
                                     setTemp(data);
-                                    
                                 }}
                             >
                                 <BsFillTrashFill />
@@ -53,18 +60,12 @@ const Note = () => {
                                 <Modal
                                     text={`Are you sure you want to delete this ${temp.title}?`}
                                     onConfirm={() => {
-                                        
                                         dispatch(deleteTodo(temp.id));
                                         setModal(false);
                                     }}
                                     onCancel={() => setModal(false)}
                                 />
                             )}
-                            {/* <button
-                                onClick={() => dispatch(updateTodo(data.id))}
-                            >
-                                update
-                            </button> */}
                         </div>
                     </div>
                 );

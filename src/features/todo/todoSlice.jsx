@@ -23,11 +23,8 @@ export const todoSlice = createSlice({
         },
         updateTodo: (state, action) => {
             state.todos = state.todos.map((data) => {
-                if (data.id === action.payload) {
-                    return {
-                        ...data,
-                        title: action.payload,
-                    };
+                if (data.id === action.payload.id) {
+                    return action.payload;
                 }
                 return data;
             });
